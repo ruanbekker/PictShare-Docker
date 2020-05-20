@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+# make it work for scaleway
+S3_REGION=${SCALEWAY_REGION:-nl-ams}
+
 _maxUploadSize() {
     echo "[i] Setting uploadsize to ${MAX_UPLOAD_SIZE}M"
     sed -i -e "s/100M/${MAX_UPLOAD_SIZE}M/g" /etc/php7/php.ini
@@ -16,6 +19,7 @@ _update() {
     curl --silent --remote-name https://codeload.github.com/HaschekSolutions/pictshare/zip/master
     unzip -q master
     cp -r pictshare-master/* .
+    for file_containing_region in $(grep -irl us-east-1 . ); do sed -i -e "s/us-east-1/${S3_REGION}/g" $file_containing_region ; done
     rm -r master pictshare-master
     chmod +x bin/ffmpeg
     chmod -R 777 data
