@@ -1,4 +1,24 @@
-# Official PictShare Docker image - Now based on Alpine Linux and PHP 7
+# pictshare for scaleway
+
+This repo has been forked from [HaschekSolutions/PictShare-Docker](https://github.com/HaschekSolutions/PictShare-Docker) to make this work with Scaleway's Object Storage
+
+```
+<Error>
+  <Code>AuthorizationHeaderMalformed</Code>
+  <Message>The authorization header is malformed; the region 'us-east-1' is wrong; expecting 'nl-ams'</Message>
+  <Region>nl-ams</Region>
+  <RequestId>x</RequestId>
+</Error>
+```
+
+Only difference is to add the environment variable `SCALEWAY_REGION=nl-ams`:
+
+```
+$ docker run -it -p 80:80 -e SCALEWAY_REGION=nl-ams [other options from below] ruanbekker/pictshare-backend:scw-ams
+```
+
+## PictShare
+
 The fastest way to deploy [PictShare](https://www.pictshare.net)
 
 It automatically updates on start unless you supply the env variable AUTOUPDATE=false
